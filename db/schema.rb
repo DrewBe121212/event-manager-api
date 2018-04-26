@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407182543) do
+ActiveRecord::Schema.define(version: 20180425150912) do
+
+  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "name", limit: 50, null: false
+    t.text "description"
+    t.integer "sort", default: 0, null: false
+    t.boolean "default", default: false, null: false
+    t.boolean "active", default: true, null: false
+    t.boolean "deleted", default: false, null: false
+  end
+
+  create_table "user_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_user_roles_on_role_id"
+    t.index ["user_id"], name: "index_user_roles_on_user_id"
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "username", limit: 30, null: false
@@ -35,4 +53,6 @@ ActiveRecord::Schema.define(version: 20180407182543) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "user_roles", "roles"
+  add_foreign_key "user_roles", "users"
 end

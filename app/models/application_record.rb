@@ -3,12 +3,14 @@ class ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
-  private
+  protected
 
   def clean_input
-    #this.attributes.each do |name, value|
-    #  this[name] = value.strip unless value.empty?
-    #end
+    this.attributes.each do |name, value|
+      if self[name].respond_to?(:strip)
+        self[name] = value.strip unless value.empty?
+      end
+    end
   end
 
 end

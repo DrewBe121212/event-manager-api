@@ -1,9 +1,20 @@
 class SessionsController < ApplicationController
+  skip_load_and_authorize_resource
 
-  
-  
+  def show
+    authorize! :view, :session
+
+    response = {}
+    response[:user] = current_user.as_json :except => ['password_digest', 'reset_password_token', 'confirmation_token']
+    response[:user][:roles] = current_user.roles
+    response[:abilities] = current_ability.permissions
+    
+    self.respond response
+  end
+
   #login
   def create
+    authorize! :new, :session
 
     errors = {}
 
@@ -30,7 +41,7 @@ class SessionsController < ApplicationController
           user: user
         }
   
-        self.respond response
+        show
       else
         self.respond_with_errors 'Invalid username and/or password'
       end
@@ -39,7 +50,7 @@ class SessionsController < ApplicationController
 
   #logout
   def destroy
-
+    authorize! :destroy, :session
   end
 
 end

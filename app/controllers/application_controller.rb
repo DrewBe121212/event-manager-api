@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::API
   include ExceptionHandler
 
+  load_and_authorize_resource
+
+  def current_user
+    @current_user ||= User.new
+  end
+
   protected
 
   def respond(response) 
@@ -13,7 +19,7 @@ class ApplicationController < ActionController::API
         error: errors
       }
     }
-    render json: response
+    respond response
   end
 
   def respond_with_field_errors(errors)
@@ -22,7 +28,7 @@ class ApplicationController < ActionController::API
         fields: errors    
       }
     }
-    render json: response
+    respond response
   end
 
 end

@@ -28,10 +28,6 @@ module EventManagerApi
       end
     end
 
-    #autoloads lib folder during production
-    config.eager_load_paths << Rails.root.join('lib')
-
-    #autoloads lib folder during development
     config.autoload_paths << Rails.root.join('lib')
   end
 end
