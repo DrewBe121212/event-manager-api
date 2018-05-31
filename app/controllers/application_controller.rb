@@ -13,12 +13,18 @@ class ApplicationController < ActionController::API
     render json: response
   end
 
-  def respond_with_errors(errors)
-    response = {
+  def respond_with_errors(errors, fields = {})
+
+     response = {
       errors: {
         error: errors
       }
     }
+
+    unless fields.empty?
+      response[:errors][:fields] = fields
+    end
+
     respond response
   end
 

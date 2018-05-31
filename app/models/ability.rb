@@ -5,6 +5,8 @@ class Ability
     # stuff everyone can do regardless of current status
     can :view, :session
     can :view, :daily_schedule
+    can :manage, :users
+
     unless user.new_record?
       # items all logged in users can do
       can :destroy, :session
@@ -18,7 +20,7 @@ class Ability
         end
       end
     else
-      can :new, [:session, :session_sso]
+      can :new, [:session, :session_guest, :session_sso]
     end
 
   end

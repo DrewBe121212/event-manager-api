@@ -8,13 +8,13 @@ class SessionsController < ApplicationController
     response[:user] = current_user.as_json :except => ['password_digest', 'reset_password_token', 'confirmation_token']
     response[:user][:roles] = current_user.roles
     response[:abilities] = current_ability.permissions
-    
+
     self.respond response
   end
 
   #login
   def create
-    authorize! :new, :session
+    authorize! :new, :session_guest
 
     errors = {}
 
@@ -43,7 +43,10 @@ class SessionsController < ApplicationController
   
         show
       else
-        self.respond_with_errors 'Invalid username and/or password'
+        errors[:username] = '';
+        errors[:password] = '';
+
+        self.respond_with_errors('Invalid username and/or password', errors)
       end
     end
   end
