@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 5}
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :active, presence: true, inclusion: { in: [ true, false ] }
 
   validates_format_of :username, :with => /\A(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])\z/
   validates_format_of :email, :with => /\A\S+@\S+\.{1}\S+\z/

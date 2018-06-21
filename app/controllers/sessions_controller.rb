@@ -5,10 +5,13 @@ class SessionsController < ApplicationController
     authorize! :view, :session
 
     response = {}
-    response[:user] = current_user.as_json :except => ['password_digest', 'reset_password_token', 'confirmation_token']
+    response[:user] = current_user.as_json :only => [
+      :id, :username, :email, :first_name, :middle_name, :lastname, 
+      :current_sign_in_at, :last_sign_in_at, :roles
+    ]
     response[:user][:roles] = current_user.roles
     response[:abilities] = current_ability.permissions
-
+   
     self.respond response
   end
 

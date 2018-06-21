@@ -3,7 +3,8 @@ class Ability
 
   def initialize(user)
     # stuff everyone can do regardless of current status
-    can :view, :session
+    can :view, [:session]
+    can :read, Menu
     can :view, :daily_schedule
     can :manage, :users
 
