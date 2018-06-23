@@ -1,6 +1,7 @@
 class MenusController < ApplicationController
   
-  def index
+  def user
+    authorize Menu
 
     menus = Rails.cache.fetch("menu_tree", expires_in: 24.hours) do
       menus = menu_tree.as_json(
@@ -13,6 +14,11 @@ class MenusController < ApplicationController
     end
 
     self.respond menus
+  end
+
+  def index
+
+
   end
 
   private

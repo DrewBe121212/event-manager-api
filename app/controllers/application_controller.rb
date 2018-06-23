@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::API
   include ExceptionHandler
+  include Pundit
 
-  load_and_authorize_resource
+  after_action :verify_authorized
 
   def current_user
     @current_user ||= User.new

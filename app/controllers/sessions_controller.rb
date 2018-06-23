@@ -1,8 +1,6 @@
 class SessionsController < ApplicationController
-  skip_load_and_authorize_resource
-
   def show
-    authorize! :view, :session
+    authorize :session
 
     response = {}
     response[:user] = current_user.as_json :only => [
@@ -13,14 +11,14 @@ class SessionsController < ApplicationController
     response[:abilities] = current_ability.permissions
    
     self.respond response
+
   end
 
   #login
   def create
-    authorize! :new, :session_guest
+    authorize :session
 
     errors = {}
-
     if params[:username].blank?
       errors[:username] = 'Username is required'
     end
@@ -54,9 +52,14 @@ class SessionsController < ApplicationController
     end
   end
 
+  # sso login
+  def create_sso
+
+  end
+
   #logout
   def destroy
-    authorize! :destroy, :session
+    authorize :session
   end
 
 end

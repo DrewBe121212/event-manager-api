@@ -16,7 +16,6 @@ module ExceptionHandler
       rescue_from ExceptionHandler::InvalidToken, with: :four_twenty_two
       rescue_from ExceptionHandler::ExpiredSignature, with: :four_ninety_eight
       rescue_from ExceptionHandler::DecodeError, with: :four_zero_one
-      rescue_from CanCan::AccessDenied, with: :unauthorized_request
 
       rescue_from ActiveRecord::RecordNotFound do |e|
        render json: { message: e.message }, status: :not_found
