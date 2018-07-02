@@ -1,14 +1,18 @@
 class SessionsController < ApplicationController
+
   def show
     authorize :session
+  
+    response = current_user.as_json(
+      :root => true,
+      :include => :roles,
+      :only => [
+        :id, :username, :email, :first_name, :middle_name, :lastname, 
+        :current_sign_in_at, :last_sign_in_at, :roles
+      ]
+    )
 
-    response = {}
-    response[:user] = current_user.as_json :only => [
-      :id, :username, :email, :first_name, :middle_name, :lastname, 
-      :current_sign_in_at, :last_sign_in_at, :roles
-    ]
-    response[:user][:roles] = current_user.roles
-    response[:abilities] = current_ability.permissions
+    response[:policies] = PolicyCollector.new(current_user).policies
    
     self.respond response
 
@@ -54,6 +58,7 @@ class SessionsController < ApplicationController
 
   # sso login
   def create_sso
+    authorize :session
 
   end
 

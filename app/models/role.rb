@@ -8,8 +8,14 @@ class Role < ApplicationRecord
   validates :active, presence: true, inclusion: { in: [ true, false ] }
   validates :deleted, presence: true, inclusion: { in: [ true, false ] }
 
+  def self.active
+    where({:active => true, :deleted => false})
+  end
+  
   def referred_name
     self[:name].underscore
   end
+
+  
 
 end

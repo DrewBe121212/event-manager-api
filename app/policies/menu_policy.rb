@@ -1,12 +1,7 @@
 class MenuPolicy < ApplicationPolicy
-  attr_reader :user, :menu
-
-  def initialize(user, menu)
-    @user = user
-    @menu = menu
-  end
-
-  def user?
+  def index?
     true
   end
+
+  
 end

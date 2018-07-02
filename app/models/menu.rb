@@ -17,14 +17,4 @@ class Menu < ApplicationRecord
     order(:sort => direction)
   end
 
-  def as_json(options)
-    response = super(options)
-
-    unless options[:children].nil? || !options[:children]
-      response[:children] = self.children.active.sorted.collect { |c| c.as_json(options) }
-    end
-
-    return response
-  end
-
 end
