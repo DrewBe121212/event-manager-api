@@ -10,7 +10,8 @@ class MenusController < ApplicationController
 
   def as_json(menu)
     menu.as_json(:only => [
-      :id, :parent_id, :title, :url, :icon, :visible, :children
+      :id, :parent_id, :title, :url, :icon, :visible, :children,
+      :authorize_perform, :authorize_on
     ])
   end
 
@@ -27,16 +28,13 @@ class MenusController < ApplicationController
 
     menus.each do |menu|
       child_menus = menu.children.active.sorted.to_a
-      visible_child_menus_count = child_menus.count { |x| x.visible }
-
+      visible_children = child_menus.count { |x| x.visible }
       # conver to json and attach children
       json_menu = as_json(menu)
       json_menu[:children] = menu_tree_recurse(child_menus)
+      json_menu[:visible_children] = json_menu[:children].count { |x| x['visible'] }
 
-      visible_child_menus_count_after_reject = json_menu[:children].count { |x| x['visible'] }
-      active_children_count = visible_child_menus_count_after_reject-visible_child_menus_count
-
-      if (active_children_count >= 0)
+      if (json_menu[:visible_children]-visible_children >= 0)
         json_menus << json_menu
       end
     end

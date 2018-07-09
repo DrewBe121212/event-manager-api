@@ -2,14 +2,15 @@ class PolicyCollector
   attr_accessor :policies
 
   @@policyClasses = [
+    SessionPolicy,
     MenuPolicy,
-    SessionPolicy
+    EventPolicy,
+    Admin::UserPolicy
   ]
 
   def initialize(user)
     
     @policies = {}
-    #@policies = {menu: MenuPolicy.new(user, nil).public_methods(false), session: SessionPolicy.new(user, nil).public_methods(false)}
 
     @@policyClasses.each do |policyClass|
       policy = policyClass.new(user, nil)

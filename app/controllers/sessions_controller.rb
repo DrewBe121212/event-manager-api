@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
       :root => true,
       :include => :roles,
       :only => [
-        :id, :username, :email, :first_name, :middle_name, :lastname, 
+        :id, :username, :email, :first_name, :middle_name, :last_name, 
         :current_sign_in_at, :last_sign_in_at, :roles
       ]
     )

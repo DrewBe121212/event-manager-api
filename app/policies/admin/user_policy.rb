@@ -1,6 +1,6 @@
 class Admin::UserPolicy < Admin::AdminPolicy
   def index?
-    true
+    false
   end
 
   def new?
