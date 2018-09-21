@@ -1,13 +1,13 @@
 class Admin::UserPolicy < Admin::AdminPolicy
   def index?
-    false
+    true
   end
 
   def new?
-    false
+    true
   end
 
   def edit?
-    false
+    true
   end
 end

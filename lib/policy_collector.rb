@@ -5,6 +5,7 @@ class PolicyCollector
     SessionPolicy,
     MenuPolicy,
     EventPolicy,
+    UserPolicy,
     Admin::UserPolicy
   ]
 

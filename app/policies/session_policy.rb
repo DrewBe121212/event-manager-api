@@ -16,10 +16,6 @@ class SessionPolicy < Struct.new(:user, :session)
     !authenticated
   end
 
-  def create_sso?
-    !authenticated
-  end
-
   def destroy?
     authenticated
   end

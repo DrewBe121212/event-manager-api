@@ -15,7 +15,6 @@ class SessionsController < ApplicationController
     response[:policies] = PolicyCollector.new(current_user).policies
    
     self.respond response
-
   end
 
   #login
@@ -23,6 +22,7 @@ class SessionsController < ApplicationController
     authorize :session
 
     errors = {}
+
     if params[:username].blank?
       errors[:username] = 'Username is required'
     end
@@ -54,12 +54,6 @@ class SessionsController < ApplicationController
         self.respond_with_errors('Invalid username and/or password', errors)
       end
     end
-  end
-
-  # sso login
-  def create_sso
-    authorize :session
-
   end
 
   #logout

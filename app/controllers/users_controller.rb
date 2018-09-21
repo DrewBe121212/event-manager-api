@@ -4,11 +4,7 @@ class UsersController < ApplicationController
 
   end
 
-  def sign_in
 
-    
-    
-  end
 
   private
 
